@@ -17,3 +17,5 @@ Choice_a_ticket = str(input('Onde deseja Viajar'))
 
 if Choice_a_ticket == Dict_Place['AFRICA']:
     print('nada')
+elif Choice_a_ticket ==  Dict_Place['RUSSIA' ]
+    print() 
