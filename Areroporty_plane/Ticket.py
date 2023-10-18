@@ -1,6 +1,11 @@
-def Pay_Ticket(Choice_place:str,Dict_exenple:dict):
+def Pay_Ticket(Choice_place:str,Values_ticket:dict):
     print(f'Você deseja Viajar para {Choice_place}')
-    print(f'O valor da passagem foi de')
+    print(f'O valor da passagem e {Values_ticket}')
+    How_pay = input('''Para pagar você tem que criar um cartao, 
+        Você tem o cartao ?
+        [S/N]->''')
+
+# That function comfirm the pay: 
 
 
 print('Aeroporto do Brasil:')
@@ -14,12 +19,13 @@ Dict_Place = {'CANADA':5.747,'ALEMANHA':5.518,
 print(f'''___________COMPAINHA AVOAR DO CEU:PASSAGENS___________ 
 Canada:{Dict_Place['CANADA']}        Alemanha:{Dict_Place['ALEMANHA']}      Mexico:{Dict_Place['MEXICO']}
 Japao:{Dict_Place["JAPAO"]}         Russia:{Dict_Place['RUSSIA']}        Coreia do Sul:{Dict_Place['COREIA DO SUL']}
-Portugal{Dict_Place["PORTUGAL"]}     Reino Unido:{Dict_Place['REINO UNIDO']}    Italia:{Dict_Place['ITALIA']}    
-Angola{Dict_Place['ANGOLA']}         Africa:{Dict_Place['AFRICA']}        Grecia:{Dict_Place['GRECIA']}
+Portugal:{Dict_Place["PORTUGAL"]}     Reino Unido:{Dict_Place['REINO UNIDO']}    Italia:{Dict_Place['ITALIA']}    
+Angola:{Dict_Place['ANGOLA']}         Africa:{Dict_Place['AFRICA']}        Grecia:{Dict_Place['GRECIA']}
 _______________________________________________________''')
 Choice_a_ticket = str(input('Onde deseja Viajar')).upper()
 # The Chois_a_ticket is where client  speak where he what go
 
 if Choice_a_ticket in Dict_Place:
-    Values_ = Dict_Place[Choice_a_ticket]
-    print(Values_)
+    Values_to_function = Dict_Place[Choice_a_ticket]
+    Pay_Ticket(Choice_a_ticket,Values_to_function)
+# Here  he send to function
