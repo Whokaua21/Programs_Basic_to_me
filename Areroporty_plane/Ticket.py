@@ -1,3 +1,8 @@
+def Pay_Ticket(Choice_place:str,Dict_exenple:dict):
+    print(f'Você deseja Viajar para {Choice_place}')
+    print(f'O valor da passagem foi de')
+
+
 print('Aeroporto do Brasil:')
 
 Dict_Place = {'CANADA':5.747,'ALEMANHA':5.518,
@@ -12,10 +17,9 @@ Japao:{Dict_Place["JAPAO"]}         Russia:{Dict_Place['RUSSIA']}        Coreia 
 Portugal{Dict_Place["PORTUGAL"]}     Reino Unido:{Dict_Place['REINO UNIDO']}    Italia:{Dict_Place['ITALIA']}    
 Angola{Dict_Place['ANGOLA']}         Africa:{Dict_Place['AFRICA']}        Grecia:{Dict_Place['GRECIA']}
 _______________________________________________________''')
-Choice_a_ticket = str(input('Onde deseja Viajar'))
+Choice_a_ticket = str(input('Onde deseja Viajar')).upper()
 # The Chois_a_ticket is where client  speak where he what go
 
-if Choice_a_ticket == Dict_Place['AFRICA']:
-    print('nada')
-elif Choice_a_ticket ==  Dict_Place['RUSSIA' ]
-    print() 
+if Choice_a_ticket in Dict_Place:
+    Values_ = Dict_Place[Choice_a_ticket]
+    print(Values_)
