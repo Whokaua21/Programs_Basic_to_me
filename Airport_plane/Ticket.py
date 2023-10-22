@@ -1,9 +1,11 @@
+from random import randint as Rep_t
 def Pay_Ticket(Choice_place:str,Values_ticket:dict):
     print(f'Você deseja Viajar para {Choice_place}')
     print(f'O valor da passagem e {Values_ticket}')
     How_pay = input('''Para pagar você tem que criar um cartao, 
         Você tem o cartao ?
         [S/N]->''')
+    return How_pay
 
 # That function comfirm the pay: 
 
@@ -22,10 +24,15 @@ Japao:{Dict_Place["JAPAO"]}         Russia:{Dict_Place['RUSSIA']}        Coreia 
 Portugal:{Dict_Place["PORTUGAL"]}     Reino Unido:{Dict_Place['REINO UNIDO']}    Italia:{Dict_Place['ITALIA']}    
 Angola:{Dict_Place['ANGOLA']}         Africa:{Dict_Place['AFRICA']}        Grecia:{Dict_Place['GRECIA']}
 _______________________________________________________''')
-Choice_a_ticket = str(input('Onde deseja Viajar')).upper()
 # The Chois_a_ticket is where client  speak where he what go
-
-if Choice_a_ticket in Dict_Place:
-    Values_to_function = Dict_Place[Choice_a_ticket]
-    Pay_Ticket(Choice_a_ticket,Values_to_function)
+try:
+    Choice_a_ticket = str(input('Onde deseja Viajar:')).upper()
+    if Choice_a_ticket in Dict_Place:
+        Values_to_function = Dict_Place[Choice_a_ticket]
+        Pay_Ticket(Choice_a_ticket,Values_to_function)
+    elif Choice_a_ticket == str:
+        print('Erro:Tenha certeza que não escreveu nada errado')
+except:
+    print(''':Ocorreu um erro:
+Parece que você escreveu numero invés do nome do Pais''')
 # Here  he send to function
