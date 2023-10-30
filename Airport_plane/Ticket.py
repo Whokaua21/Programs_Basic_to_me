@@ -1,7 +1,11 @@
 
 from random import randint as Rep_t
 from Card_areport import *
-Dict_to_play = {} 
+Dict_to_play = {}
+
+with open('Data_of_user.json','r') as Json_mix:
+     Recebe = json.load(Json_mix)
+     print(Recebe)
     # That function comfirm the pay: 
 def Pay_Ticket(Choice_place:str,Values_ticket:dict,Dicionario:dict ):
     Dict_to_Accont = {}
@@ -11,14 +15,12 @@ def Pay_Ticket(Choice_place:str,Values_ticket:dict,Dicionario:dict ):
             Você tem o cartao ?
             [S/N]->''')).upper()
     if How_pay == 'S':
-            Accont_plane()
-            if Accont_plane() == Pay_Ticket():
-                print('ep')
+            here = Accont_plane()
+
     elif How_pay == 'N':
             print('Não')
-            Dict_to_Accont = Accont_plane()
-            print(Dict_to_Accont)
-            return Dict_to_Accont
+            here = Accont_plane()
+            
 while True:
     Num = 0
     #Here is a menu to client
