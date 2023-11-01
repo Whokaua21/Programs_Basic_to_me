@@ -10,7 +10,9 @@ def Accont_plane():
         Register_password = str(input('SENHA:'))
         if List_Emails[0] in Register_email or List_Emails[1] in Register_email or List_Emails[2] in Register_email :
             if len(Register_password) >= 8:
-                Dict_register[Register_email[0]] = Register_password
+                Dict_register[Register_email] = Register_password
+                with open('Data_of_user.json','w') as Json_save:
+                    json.dump(Dict_register,Json_save)
                 break
             elif len(Register_password) < 8:
                 print('Sua senha e muito curta por favor troque')
@@ -19,8 +21,5 @@ def Accont_plane():
             print('Ops Ocorreu um erro:')
             continue
     return Dict_register
-Dict = Accont_plane()
-with open('Data_of_user.json','w') as Json_save:
-    Salve = json.dump(Dict,Json_save)
 
 

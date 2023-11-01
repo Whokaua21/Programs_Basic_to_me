@@ -2,10 +2,12 @@
 from random import randint as Rep_t
 from Card_areport import *
 Dict_to_play = {}
+with open('Data_of_user.json','r') as Jsun:
+    Dict = json.load(Jsun)
+Keys_Email = Dict.keys()
+Value_Password = Dict.values()
 
-with open('Data_of_user.json','r') as Json_mix:
-     Recebe = json.load(Json_mix)
-     print(Recebe)
+
     # That function comfirm the pay: 
 def Pay_Ticket(Choice_place:str,Values_ticket:dict,Dicionario:dict ):
     Dict_to_Accont = {}
@@ -15,14 +17,15 @@ def Pay_Ticket(Choice_place:str,Values_ticket:dict,Dicionario:dict ):
             Você tem o cartao ?
             [S/N]->''')).upper()
     if How_pay == 'S':
-            here = Accont_plane()
-
+            Accont_email = input('Email:')
+            Pass_word = input('Senha:')
+            if Accont_email == Keys_Email and Pass_word == Value_Password:
+                print('ok')
+            return
     elif How_pay == 'N':
             print('Não')
-            here = Accont_plane()
             
 while True:
-    Num = 0
     #Here is a menu to client
     print('Aeroporto do Brasil:')
     Dict_Place = {'CANADA':5.747,'ALEMANHA':5.518,
@@ -38,14 +41,11 @@ while True:
     Angola:{Dict_Place['ANGOLA']}         Africa:{Dict_Place['AFRICA']}        Grecia:{Dict_Place['GRECIA']}
     _______________________________________________________''')
     # The Chois_a_ticket is where client  speak where he what go
-    Num += 1
     Choice_a_ticket = str(input('Onde deseja Viajar:')).upper()
     if Choice_a_ticket in Dict_Place:
         Values_to_function = Dict_Place[Choice_a_ticket]
-        Dict_to_play = Pay_Ticket(Choice_a_ticket,Values_to_function,Dict_to_play)
+        Pay_Ticket(Choice_a_ticket,Values_to_function,Dict_to_play)
+        break
     elif Choice_a_ticket not in Dict_Place:
         print('Erro:Certifique que o nome do pais esteja certo')
-    elif Num == 1:
-         Pay_Ticket(Choice_a_ticket,Values_to_function,Dict_to_play)
     # Here  he send to function
-   
