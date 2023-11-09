@@ -13,6 +13,7 @@ def Accont_plane():
                 Dict_register[Register_email] = Register_password
                 with open('Data_of_user.json','w') as Json_save:
                     json.dump(Dict_register,Json_save)
+                print('Sua conta foi criada:')
                 break
             elif len(Register_password) < 8:
                 print('Sua senha e muito curta por favor troque')
