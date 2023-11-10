@@ -11,8 +11,6 @@ Value_Password = list(Dict.values())
 
     # That function comfirm the pay: 
 def Pay_Ticket(Choice_place:str,Values_ticket:dict):
-    print(Keys_Email)
-    print(Value_Password)
     Dict_to_Accont = {}
     print(f'Você deseja Viajar para {Choice_place}')
     print(f'O valor da passagem e {Values_ticket}')
@@ -28,6 +26,7 @@ def Pay_Ticket(Choice_place:str,Values_ticket:dict):
                     if Pass_word in Value_Password:
                         print('Seu email foi logado')
                         print('Obrigado por comprar sua passagem')
+                        break
                     else:
                         print('''Sua senha esta errada
 Deseja criar uma nova conta ?''')
