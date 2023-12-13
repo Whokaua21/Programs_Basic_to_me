@@ -12,12 +12,9 @@ Link_base = 'https://id-prosuct-default-rtdb.firebaseio.com/'
 List_id = []
 fire_base = requests.get(f'{Link_base}/Produtos/.json')
 Json_load = (fire_base.json())
+List_delet_something = []
 
 
-     
-Date = datetime.now().date
-Month = datetime.now().month
-Year = datetime.now().year
 
 class Creat_id:
     '''
@@ -42,8 +39,9 @@ class Creat_id:
                          'Usuario':Entr_Who.get()}
                 Firebase = requests.post(f'{Link_base}/Produtos/.json',data=json.dumps(ID_Save),)
                 print(Firebase)
+                wind_Id.destroy()
         # Windos of Creat ID 
-
+        winTk.destroy
         wind_Id = Tk()
         wind_Id.geometry('200x300')
         wind_Id.resizable(width=False,height=False)
@@ -75,7 +73,6 @@ class Creat_id:
         # Who creat the ID
         Label_Who.place(x=10,y=160)
         Entr_Who.place(x=10,y=190)        
-        
         # Buttom Ready
 
         
@@ -114,32 +111,89 @@ def Delete_data():
     winTk.destroy()
     Delete_Tk = Tk()
     Delete_Tk.title('Depois colocar')
-    Delete_Tk.geometry('700x600')
+    Delete_Tk.geometry('1100x400')
     Delete_Tk.resizable(width=False,height=False)
     # Frames to the windos delete
     Frame_stripe = Frame(Delete_Tk,width=7000,height=100,bg='Black')
     Frame_Column = Frame(Delete_Tk,height=7000,width=7000,bg='Pink')
+    def Delete_clik():
+        try:
+          cont = 0
+          for Delet_bye in Json_load:
+                
+                if Entr_delete.get() == Delet_bye:
+                    requests.delete(f'{Link_base}/Produto/{Delet_bye}/.json')
 
+                elif Entr_delete.get() == List_delet_something[cont]:
+
+                    requests.delete(f'{Link_base}/Produtos/{Delet_bye}/.json')
+                    break
+                cont += 1                 
+        except:
+            messagebox.showerror('Erro de dado','Veja se o Id Local Existe ou se digitou errado')
     # Other things
     Label_delete = Label(Frame_stripe,text='Codigo do Produto:',font='Arial 12')
     Entr_delete = Entry(Delete_Tk,font='Arial 12')
 
     Label_Date = Label(text='Data de hoje',font='Arial 12')
-    Label_time = Label(text=datetime.now().strftime('%d-%m-%Y'),font=12)
+    Label_time = Label(text=datetime.now().strftime('%d-%m-%Y'),font=13)
     print(datetime.today())
-    Buttom_delete_wind = Button(Delete_Tk,text='Deletar\nID',padx=20,pady=31)
+    Buttom_delete_wind = Button(Delete_Tk,text='Deletar\nID',padx=20,pady=31,command=Delete_clik)
 
 
-    # Put Scree
-    Frame_stripe.grid(column=0,row=0)
+    # Put in Scree
+    Frame_stripe.place(x=0)
     Frame_Column.place(y=100)
     # Itens 
     Label_delete.place(x=5,y=5)
     Entr_delete.place(x=5,y=40)
 
-    Label_Date.place(x=285)
-    Label_time.place(x=230,y=30)
-    Buttom_delete_wind.place(x=620)
+    Label_Date.place(x=288)
+    Label_time.place(x=280,y=30)
+
+    Buttom_delete_wind.place(x=920)
+    # Frame_Column
+    Label_Details_Area = Label(Frame_Column,text='ID da Area',font='Arial 10',padx=80)
+    Label_Details_ID_p = Label(Frame_Column,text='ID do Produto',font='Arial 10',padx=30)
+    Label_Details_Name = Label(Frame_Column,text='Nome Produto',font='Arial 10',padx=50)
+    Label_Details_Values = Label(Frame_Column,text='Valor produto',font='Arial 10',padx=40)
+    Label_Details_User = Label(Frame_Column,text='Usuario fornecido',font='Arial 10',padx=50)
+
+    # put in scree
+    Label_Details_Area.grid(column=0,row=0)
+    Label_Details_ID_p.grid(column=1,row=0)
+    Label_Details_Name.grid(column=2,row=0)
+    Label_Details_Values.grid(column=3,row=0)
+    Label_Details_User.grid(column=4,row=0)
+
+    cont_columm = 1
+    List_delet_something = []
+    for Delet_id in Json_load:
+        Local_id  =Json_load[Delet_id]['Id_produto']
+        Name_ID = Json_load[Delet_id]['Nome_produto']
+        Value_ID = Json_load[Delet_id]['Valor Produto']
+        User_data = Json_load[Delet_id]['Usuario']
+        List_delet_something.append(Local_id)
+        print(List_delet_something)
+
+        Label_Details_Area_put = Label(Frame_Column,text=Delet_id,font='Arial 11',padx=10,pady=2)
+        Label_Details_ID_p_put = Label(Frame_Column,text=Local_id,font='Arial 10',padx=52,pady=3)
+        Label_Details_Name_put = Label(Frame_Column,text=Name_ID,font='Arial 11',padx=40,pady=3)
+        Label_Details_Values_put = Label(Frame_Column,text=f'{Value_ID}R$',font='Arial 12',padx=100,pady=2)
+        Label_Details_User_put = Label(Frame_Column,text=User_data,font='Arial 12',padx=90,pady=2)
+
+        Label_Details_Area_put.grid(column=0,row=cont_columm)
+        Label_Details_ID_p_put.grid(column=1,row=cont_columm)
+        Label_Details_Name_put.grid(column=2,row=cont_columm)
+        Label_Details_Values_put.grid(column=3,row=cont_columm)
+        Label_Details_User_put.grid(column=4,row=cont_columm)
+        cont_columm +=1
+
+
+    Scrollbar_windos = Scrollbar(Delete_Tk,orient=VERTICAL)
+    Scrollbar_windos.pack(side=RIGHT,fill=Y,)
+
+
 # put Tkinter
 
 winTk = Tk()
