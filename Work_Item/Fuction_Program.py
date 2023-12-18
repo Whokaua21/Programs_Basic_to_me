@@ -13,8 +13,8 @@ List_id = []
 fire_base = requests.get(f'{Link_base}/Produtos/.json')
 Json_load = (fire_base.json())
 List_delet_something = []
-
-
+Data_firebse = {}
+Delete_us = {}
 
 class Creat_id:
     '''
@@ -111,47 +111,165 @@ def Delete_data():
     winTk.destroy()
     Delete_Tk = Tk()
     Delete_Tk.title('Depois colocar')
-    Delete_Tk.geometry('1100x400')
+    Delete_Tk.geometry('1100x800')
     Delete_Tk.resizable(width=False,height=False)
     # Frames to the windos delete
     Frame_stripe = Frame(Delete_Tk,width=7000,height=100,bg='Black')
     Frame_Column = Frame(Delete_Tk,height=7000,width=7000,bg='Pink')
     def Delete_clik():
-        try:
-          cont = 0
-          for Delet_bye in Json_load:
-                
+    
+        cont = 0
+        if Entr_delete.get() == '': 
+            messagebox.showerror('Erro de informaçao','Você não colocou nada na caixa de informaçao')
+        else:
+            for Delet_bye in Json_load:
+        
                 if Entr_delete.get() == Delet_bye:
                     requests.delete(f'{Link_base}/Produto/{Delet_bye}/.json')
 
                 elif Entr_delete.get() == List_delet_something[cont]:
 
                     requests.delete(f'{Link_base}/Produtos/{Delet_bye}/.json')
+                    messagebox.showinfo('Item Deletado','Item Deletado com sucesso')
                     break
-                cont += 1                 
-        except:
-            messagebox.showerror('Erro de dado','Veja se o Id Local Existe ou se digitou errado')
-    # Other things
-    Label_delete = Label(Frame_stripe,text='Codigo do Produto:',font='Arial 12')
-    Entr_delete = Entry(Delete_Tk,font='Arial 12')
+                cont += 1
+            if Entr_delete.get() not in Delet_bye or Entr_delete.get() not in List_delet_something:
+                messagebox.showerror('Erro de find','Esse ID Não existe veja se você escreveu certo ou se o ID Existe') 
+            Entr_delete.delete('0','end')
+        
+    def Upgrade_buttom():
+        
+        def DEf_Upgrade():
+          
+            if Entry_write.get() == '':
+                messagebox.showerror('Erro 147','Você não colocou o ID do produto')
+            else:  
+                cont = 0
+                for Delet_bye in Json_load:
 
-    Label_Date = Label(text='Data de hoje',font='Arial 12')
-    Label_time = Label(text=datetime.now().strftime('%d-%m-%Y'),font=13)
+                    if Entry_write.get() == Delet_bye:
+
+                        print('AA')
+                        if Entry_write_product.get() != '' and Entry_Details_Values_Product.get() != '':
+                            print('aaa')
+
+                        elif Entry_write_product.get() != '':
+                            Data_firebse = {'Nome_produto':Entry_write_product.get()}
+                            o = requests.patch(f'{Link_base}/Produtos/{Delet_bye}/.json',data=json.dumps(Data_firebse))
+                            print(o)
+
+                        elif Entry_Details_Values_Product.get() != '':
+                            print('Yes')
+                            Data_firebse = {'Valor Produto':Entry_Details_Values_Product.get()}
+                            a = requests.patch(f'{Link_base}/Produtos/{Delet_bye}/.json',data=json.dumps(Data_firebse))
+                            print(a)
+                        else:
+                            print('Tudo errado')
+
+                        break
+                
+
+                    elif Entry_write.get() == List_delet_something[cont]:
+
+                        print('BBB')
+                        if Entry_write_product.get() != '' and Entry_Details_Values_Product.get() != '':
+                            print('aaa')
+                            o = requests.patch(f'{Link_base}/Produtos/{Delet_bye}/.json',data=json.dumps(Data_firebse))
+                            a = requests.patch(f'{Link_base}/Produtos/{Delet_bye}/.json',data=json.dumps(Data_firebse))
+                            messagebox.showinfo('Alteraçao concluida','Alteraçao deita com sucesso')
+
+                        elif Entry_write_product.get() != '':
+                            Data_firebse = {'Nome_produto':Entry_write_product.get()}
+                            o = requests.patch(f'{Link_base}/Produtos/{Delet_bye}/.json',data=json.dumps(Data_firebse))
+                            messagebox.showinfo('Alteraçao concluida','Alteraçao deita com sucesso')
+                            print(o)
+
+                        elif Entry_Details_Values_Product.get() != '':
+                            print('Yes')
+                            Data_firebse = {'Valor Produto':Entry_Details_Values_Product.get()}
+                            a = requests.patch(f'{Link_base}/Produtos/{Delet_bye}/.json',data=json.dumps(Data_firebse))
+                            messagebox.showinfo('Alteraçao concluida','Alteraçao deita com sucesso')
+                            print(a)
+                        else:
+                            print('Tudo errado') 
+                        break
+                    cont += 1
+
+
+               
+                Entry_write_product.delete('0','end')
+                Entry_Details_Values_Product.delete('0','end')
+                Entry_user.delete('0','and')
+                 
+            
+           
+            
+        Upgrade_Tk = Tk()
+        Upgrade_Tk.geometry('600x800')
+        Upgrade_Tk.resizable(width=False,height=False)
+        # Frame
+        Frame_center = Frame(Upgrade_Tk,width=1000,height=100,bg='Blue')
+
+        # Itens to scree
+        LAbel_Upgrade = Label(Frame_center,text='Alteraçao de ID',font='Arial 20')
+        Label_write = Label(Upgrade_Tk,text='Escreva o codigo do produto:',font='Arial 20')
+        Entry_write = Entry(Upgrade_Tk,font='Arial 20')
+
+        Label_Detail_product = Label(Upgrade_Tk,text='Alterar nome do produto:',font='Arial 20')
+        Entry_write_product = Entry(Upgrade_Tk,font='Arial 20')
+
+        Label_Detail_Values_product = Label(Upgrade_Tk,text='Altera Valor do produto:',font='Arial 20')
+        Entry_Details_Values_Product = Entry(Upgrade_Tk,font='Arial 20')
+
+        Label_user = Label(Upgrade_Tk,text='Quem esta Alterando:',font='Arial 20')
+        Entry_user = Entry(Upgrade_Tk,font='Arial 20')
+
+        Button_Ready_Upgrade = Button(Upgrade_Tk,text='Pronto',padx=100,pady=20,command=DEf_Upgrade)
+
+        # put
+        Frame_center.place(x=0)
+        LAbel_Upgrade.place(x=200)
+
+        Label_write.place(x=20,y=150)
+        Entry_write.place(x=20,y=200,relwidth=0.9)
+
+        Label_Detail_product.place(x=20,y=260)
+        Entry_write_product.place(x=20,y=320,relwidth=0.9)
+
+        Label_Detail_Values_product.place(x=20,y=380)
+        Entry_Details_Values_Product.place(x=20,y=420,relwidth=0.9)
+
+        Label_user.place(x=20,y=500)
+        Entry_user.place(x=20,y=555,relwidth=0.9)
+
+        Button_Ready_Upgrade.place(x=165,y=650)
+
+
+
+
+    # Other things
+    Label_delete = Label(Frame_stripe,text='Codigo do Produto:',font='Arial 15')
+    Entr_delete = Entry(Frame_stripe,font='Arial 12',)
+
+    Label_Date = Label(text='Data de hoje',font='Arial 15')
+    Label_time = Label(text=datetime.now().strftime('%d-%m-%Y'),font='Arial 15')
     print(datetime.today())
-    Buttom_delete_wind = Button(Delete_Tk,text='Deletar\nID',padx=20,pady=31,command=Delete_clik)
+    Buttom_delete_wind = Button(Frame_stripe,text='Deletar\nID',padx=20,pady=31,command=Delete_clik)
+    Buttom_Upgrade = Button(Frame_stripe,text='Alterar\nID',padx=20,pady=31,command=Upgrade_buttom)
 
 
     # Put in Scree
     Frame_stripe.place(x=0)
     Frame_Column.place(y=100)
     # Itens 
-    Label_delete.place(x=5,y=5)
-    Entr_delete.place(x=5,y=40)
+    Label_delete.place(x=5,y=5,relwidth=0.035)
+    Entr_delete.place(x=5,y=40,relwidth=0.050)
 
-    Label_Date.place(x=288)
-    Label_time.place(x=280,y=30)
+    Label_Date.place(x=400,relwidth=0.2)
+    Label_time.place(x=400,y=30,relwidth=0.2)
 
-    Buttom_delete_wind.place(x=920)
+    Buttom_delete_wind.place(x=1000)
+    Buttom_Upgrade.place(x=918)
     # Frame_Column
     Label_Details_Area = Label(Frame_Column,text='ID da Area',font='Arial 10',padx=80)
     Label_Details_ID_p = Label(Frame_Column,text='ID do Produto',font='Arial 10',padx=30)
@@ -174,7 +292,6 @@ def Delete_data():
         Value_ID = Json_load[Delet_id]['Valor Produto']
         User_data = Json_load[Delet_id]['Usuario']
         List_delet_something.append(Local_id)
-        print(List_delet_something)
 
         Label_Details_Area_put = Label(Frame_Column,text=Delet_id,font='Arial 11',padx=10,pady=2)
         Label_Details_ID_p_put = Label(Frame_Column,text=Local_id,font='Arial 10',padx=52,pady=3)
@@ -194,6 +311,10 @@ def Delete_data():
     Scrollbar_windos.pack(side=RIGHT,fill=Y,)
 
 
+
+
+
+    mainloop()
 # put Tkinter
 
 winTk = Tk()
@@ -226,7 +347,6 @@ Id_creat = Creat_id(Entr_ID.get(),Entr_Val.get(),Box_buttom.get(),Bottom_Vol.get
 Buttom_type = Button(Frame_type,text='Novo ID',padx=0,pady=15,command=Id_creat.creat_Id) 
 Buttom_Ready = Button(Frame_Val,text='Pronto',padx=15,pady=15,command=Ready_Work)
 Bottom_delete = Button(Frame_type,text='Deletar\nID',padx=5,pady=20,command=Delete_data)
-Bottom_alter = Button(Frame_type,text='Alterar\nID',padx=5,pady=20,command=...)
 Bottom_all_buy = Button(Frame_type,text='Prompras\nID',padx=5,pady=20,font='Arial 7',command=...)
 Bottom_Codig = Button(Frame_type,text='Qr\ncode',padx=10,pady=20,command=...)
 #Frame_val
@@ -242,9 +362,8 @@ Buttom_Ready.place(x=681)
 # Frame Type
 Buttom_type.place(x=0,y=0)
 Bottom_delete.place(x=0,y=54)
-Bottom_alter.place(x=0,y=133)
-Bottom_all_buy.place(y=212)
-Bottom_Codig.place(y=283)
+Bottom_all_buy.place(y=133)
+Bottom_Codig.place(y=204)
 # Now the Frame_type
 
 
