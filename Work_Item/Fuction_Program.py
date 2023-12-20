@@ -174,32 +174,47 @@ def Delete_data():
                         print('BBB')
                         if Entry_write_product.get() != '' and Entry_Details_Values_Product.get() != '':
                             print('aaa')
+                            Data_firebse = {'Nome_produto':Entry_write_product.get()}
                             o = requests.patch(f'{Link_base}/Produtos/{Delet_bye}/.json',data=json.dumps(Data_firebse))
-                            a = requests.patch(f'{Link_base}/Produtos/{Delet_bye}/.json',data=json.dumps(Data_firebse))
-                            messagebox.showinfo('Alteraçao concluida','Alteraçao deita com sucesso')
+
+                            o = requests.post(f'{Link_base}/Save/.json',data=json.dumps(Data_firebse))
+                            Data = {'Valor Produto':Entry_Details_Values_Product.get()}
+
+                            a = requests.patch(f'{Link_base}/Produtos/{Delet_bye}/.json',data=json.dumps(Data))
+
+                            a = requests.post(f'{Link_base}/Save/.json',data=json.dumps(Data))
+
+                            messagebox.showinfo('Alteraçao concluida','Alteraçao feita com sucesso')
 
                         elif Entry_write_product.get() != '':
                             Data_firebse = {'Nome_produto':Entry_write_product.get()}
                             o = requests.patch(f'{Link_base}/Produtos/{Delet_bye}/.json',data=json.dumps(Data_firebse))
-                            messagebox.showinfo('Alteraçao concluida','Alteraçao deita com sucesso')
+
+                            o = requests.post(f'{Link_base}/Save/.json',data=json.dumps(Data_firebse))
+                            messagebox.showinfo('Alteraçao concluida','Alteraçao feita com sucesso')
                             print(o)
 
                         elif Entry_Details_Values_Product.get() != '':
                             print('Yes')
                             Data_firebse = {'Valor Produto':Entry_Details_Values_Product.get()}
                             a = requests.patch(f'{Link_base}/Produtos/{Delet_bye}/.json',data=json.dumps(Data_firebse))
-                            messagebox.showinfo('Alteraçao concluida','Alteraçao deita com sucesso')
+
+                            a = requests.post(f'{Link_base}/Save/.json',data=json.dumps(Data))
+                            messagebox.showinfo('Alteraçao concluida','Alteraçao feita com sucesso')
                             print(a)
                         else:
-                            print('Tudo errado') 
+                            print() 
                         break
                     cont += 1
+                if Entry_write.get() in List_delet_something or Entry_write.get() == Delet_bye:
+                    ...
+                else:
+                    messagebox.showerror('Erro de ID','Esse ID não existe veja se você escreveu tudo certo :)')
 
 
-               
                 Entry_write_product.delete('0','end')
                 Entry_Details_Values_Product.delete('0','end')
-                Entry_user.delete('0','and')
+                Entry_user.delete('0','end')
                  
             
            
@@ -315,6 +330,10 @@ def Delete_data():
 
 
     mainloop()
+
+
+   
+    
 # put Tkinter
 
 winTk = Tk()
@@ -347,7 +366,6 @@ Id_creat = Creat_id(Entr_ID.get(),Entr_Val.get(),Box_buttom.get(),Bottom_Vol.get
 Buttom_type = Button(Frame_type,text='Novo ID',padx=0,pady=15,command=Id_creat.creat_Id) 
 Buttom_Ready = Button(Frame_Val,text='Pronto',padx=15,pady=15,command=Ready_Work)
 Bottom_delete = Button(Frame_type,text='Deletar\nID',padx=5,pady=20,command=Delete_data)
-Bottom_all_buy = Button(Frame_type,text='Prompras\nID',padx=5,pady=20,font='Arial 7',command=...)
 Bottom_Codig = Button(Frame_type,text='Qr\ncode',padx=10,pady=20,command=...)
 #Frame_val
 Label_txt.place(x=15,y=0)
@@ -362,8 +380,7 @@ Buttom_Ready.place(x=681)
 # Frame Type
 Buttom_type.place(x=0,y=0)
 Bottom_delete.place(x=0,y=54)
-Bottom_all_buy.place(y=133)
-Bottom_Codig.place(y=204)
+Bottom_Codig.place(y=133)
 # Now the Frame_type
 
 
