@@ -1,4 +1,6 @@
-So my name is Kaua i'm learning program because i like code
-my english don't is very good but with time i improve
-some project i write portugues but not problem
-So see my project and my studeny
+My name is Kauã
+i'm 16 year and my profession is Full Stack
+
+i'm Studyng to be a person better in life
+
+So here is where i go put some project to my profession :)
