@@ -29,6 +29,7 @@ if Accont_have in list_letter['Yes']:
         print('Preparando a interface')
         for log_ in tqdm.tqdm(range(5),colour='Green'):
             sleep(1)
+            verify_log.Into_program()
 
 elif Accont_have in list_letter['Not']:
     try:
@@ -75,17 +76,34 @@ elif Accont_have in list_letter['Not']:
         Weger_user = str(input('Salario do usuario:'))
         if ',' in Weger_user :
             Weger_format = Weger_user.replace(',','')
+            Weger_format = int(Weger_format)
         elif '.' in Weger_user:
             Weger_format = Weger_user.replace('.','')
-        Weger_format = int(Weger_format)
+            Weger_format = int(Weger_format)
+        else:
+            Weger_format = Weger_user
+        while True:
+            Phone_informat = str(input('Numero de telefone'))
+            if len(Phone_informat) > 12:
+                continue
+            else:
+                break
+        if  '71' not in Phone_informat:
+            Phone_informat = f'71{Phone_informat}' 
         Recomend_user = str(input('Você foi recomendado [S/N]:')).upper()
         if Recomend_user in list_letter['Yes']:
             print('Obs:Coloque o numero de recomendação que esta no banco do recomendador')
             Who_recomend = str(input('Numero de Reconmendação:'))
-        Sql_log = Bank_accont(email_user,password_user,CPF_format,Profession_user,Date_Birthday_format,Weger_format,name_user)
+        Sql_log = Bank_accont(email_user,password_user,CPF_format,Profession_user,Date_Birthday_format,Weger_format,name_user,Phone_informat)
         Sql_log.Sql_accont()
         os.system('cls')
+        Sql_log = Frame_Bank(email_user,password_user)
         print(Fore.GREEN + f'{format_}Login feito com Concluido{format_}' + Style.RESET_ALL)
+        print('Preparando a interface')
+        for log_ in tqdm.tqdm(range(5),colour='Green'):
+            sleep(1)
+            Sql_log.Into_program()
+
     except ValueError:
         print('Erro:Valor incoreto')
         

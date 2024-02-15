@@ -1,0 +1,25 @@
+{
+    "workbench.colorTheme": "Night Owl (No Italics)",
+    "git.ignoreMissingGitWarning": true,
+    "workbench.activityBar.location": "top",
+    "explorer.confirmDelete": false,
+    "explorer.confirmDragAndDrop": false,
+    "editor.wordWrap": "on",
+    "symbols.hidesExplorerArrows": false,
+    "editor.fontFamily": "JetBrains Mono",
+    "editor.fontSize": 14,
+    "editor.lineHeight": 1.8,
+    "editor.fontLigatures": true,
+    "explorer.compactFolders": false,
+    "breadcrumbs.enabled": false,
+    "editor.scrollbar.vertical": "hidden",
+    "editor.scrollbar.horizontal": "hidden",
+    "editor.renderLineHighlight": "gutter",
+    "workbench.editor.labelFormat": "short",
+    "window.zoomLevel": -1,
+    "workbench.editorAssociations": {
+        "*.db": "sqlite-viewer.option"
+    },
+    "files.autoSave": "afterDelay",
+    "editor.rename.enablePreview": false
+}

@@ -3,7 +3,7 @@ from pix_bank import *
 import random
 
 class Bank_accont():
-    def __init__(self,email:str,password:str,CPF_:str,Profession:str,Date:str,Weger:int,Name:str) -> None:
+    def __init__(self,email:str,password:str,CPF_:str,Profession:str,Date:str,Weger:int,Name:str,Phone_informat:str) -> None:
         self.email = email
         self.password = password
         self.cpf = CPF_
@@ -11,6 +11,7 @@ class Bank_accont():
         self.date = Date
         self.weger = Weger
         self.name = Name
+        self.Phone = Phone_informat 
     def Sql_accont(self):
         connect_data = sql.connect('Lup_cap/Bank_Lu.db')
         cursor_data = connect_data.cursor()
@@ -21,7 +22,7 @@ class Bank_accont():
             if rando_select[0] == Random:
                 print('Seila')
                 Random = random.randint(1,100000)
-        cursor_data.execute(f'insert into Bank_lup_cap(CPF,NAME,EMAIL,PASSWORD,PROFESSION,DATE_,ID_recomend,"WEGER") values ("{self.cpf}","{self.name}","{self.email}","{self.password}","{self.profe}","{self.date}","{Random}","{self.weger}");')
+        cursor_data.execute(f'insert into Bank_lup_cap(CPF,NAME,EMAIL,PASSWORD,PROFESSION,DATE_,ID_recomend,WEGER,TELEFONE) values ("{self.cpf}","{self.name}","{self.email}","{self.password}","{self.profe}","{self.date}","{Random}","{self.weger}","{self.Phone}");')
         connect_data.commit()
         connect_data.close
 
@@ -35,6 +36,7 @@ class Frame_Bank(Bank_accont):
             cursor_data = connect_data.cursor()
             cursor_data.execute(f'Select * from Bank_lup_cap where EMAIL = "{self.email_log}"')
             select_sql = cursor_data.fetchall()
+            connect_data.close()
             print(select_sql)
             print(f'''
             --------Interface Bank Lup--------
@@ -45,11 +47,14 @@ class Frame_Bank(Bank_accont):
             [E] EMPRESTIMO
             [C] CARTÃO
             [M] METAS 
+            [K] CRIAR UMA CHAVE
             ''')    
             print(' Aviso:A Função meta ainda ta em desenvolvimento')
             select_frame = str(input('-->').upper())
             if select_frame == 'P':
-               ...
+               Bank_p = Pix_bank(select_sql[0][4],select_sql[0][5],select_sql[0][2],select_sql[0][8],select_sql[0][9],select_sql[0][1],select_sql[0][0])
+               print(select_sql[0][4],select_sql[0][5],select_sql[0][2],select_sql[0][8],select_sql[0][9],select_sql[0][1])
+               Bank_p.Choice_person()
             elif select_frame == 'E':
                 ...
             elif select_frame == 'C':
@@ -71,6 +76,3 @@ class Frame_Bank(Bank_accont):
                 return 'LOGIN'
         connect_data.close()
         return 'ERROR'
-con = sql.connect('Lup_cap/Bank_Lu.db')
-cur = con.cursor()
-cur.execute('alter table Bank_lup_cap add column TELEFONE')
