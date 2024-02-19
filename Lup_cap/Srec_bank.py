@@ -84,16 +84,28 @@ elif Accont_have in list_letter['Not']:
             Weger_format = Weger_user
         while True:
             Phone_informat = str(input('Numero de telefone'))
-            if len(Phone_informat) > 12:
+            if len(Phone_informat) > 9:
+                print(Fore.RED + f'{format_}Numero incorreto{format_}\nVeja se tem o DD' + Style.Re)
                 continue
             else:
                 break
-        if  '71' not in Phone_informat:
-            Phone_informat = f'71{Phone_informat}' 
         Recomend_user = str(input('Você foi recomendado [S/N]:')).upper()
         if Recomend_user in list_letter['Yes']:
-            print('Obs:Coloque o numero de recomendação que esta no banco do recomendador')
-            Who_recomend = str(input('Numero de Reconmendação:'))
+            while True:
+                print('Obs:Coloque o numero de recomendação que esta no banco do recomendador')
+                Who_recomend = int(input('Numero de Reconmendação:'))
+                function_recoemnd = recomend_(Who_recomend)
+                if function_recoemnd == 'ERRO':
+                    print(colorama.Fore.RED + f'{format_}Recomendaçao negada{format_}'+ colorama.Style.RESET_ALL)
+                    Recomend_user = str(input('Você quer tentar novamente ?\n[S]Sim\n[N]NÃO').upper())
+                    if Recomend_user in list_letter['Yes']:
+                        continue
+                    else:
+                        break
+                else:
+                    print(colorama.Fore.GREEN + f'{format_}Recomendaçao Aceita{format_}' + colorama.Style.RESET_ALL)
+                break
+                
         Sql_log = Bank_accont(email_user,password_user,CPF_format,Profession_user,Date_Birthday_format,Weger_format,name_user,Phone_informat)
         Sql_log.Sql_accont()
         os.system('cls')

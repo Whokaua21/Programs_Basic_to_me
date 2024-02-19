@@ -1,6 +1,8 @@
 import sqlite3 as sql
 from pix_bank import *
 import random
+import colorama
+format_ = "-" * 20
 
 class Bank_accont():
     def __init__(self,email:str,password:str,CPF_:str,Profession:str,Date:str,Weger:int,Name:str,Phone_informat:str) -> None:
@@ -38,29 +40,8 @@ class Frame_Bank(Bank_accont):
             select_sql = cursor_data.fetchall()
             connect_data.close()
             print(select_sql)
-            print(f'''
-            --------Interface Bank Lup--------
-            NOME:{select_sql[0][2]}
-            PROFISSÃO:{select_sql[0][3]}
-            SALDO BANCARIO:{select_sql[0][8]}
-            [P] PIX
-            [E] EMPRESTIMO
-            [C] CARTÃO
-            [M] METAS 
-            [K] CRIAR UMA CHAVE
-            ''')    
-            print(' Aviso:A Função meta ainda ta em desenvolvimento')
-            select_frame = str(input('-->').upper())
-            if select_frame == 'P':
-               Bank_p = Pix_bank(select_sql[0][4],select_sql[0][5],select_sql[0][2],select_sql[0][8],select_sql[0][9],select_sql[0][1],select_sql[0][0])
-               print(select_sql[0][4],select_sql[0][5],select_sql[0][2],select_sql[0][8],select_sql[0][9],select_sql[0][1])
-               Bank_p.Choice_person()
-            elif select_frame == 'E':
-                ...
-            elif select_frame == 'C':
-                ...
-            elif select_frame == 'M':
-                ...
+            Bank_p = Pix_bank(select_sql[0][4],select_sql[0][5],select_sql[0][2],select_sql[0][8],select_sql[0][9],select_sql[0][1],select_sql[0][0],select_sql[0][3])
+            Bank_p.Frame_log()
         except:
             print()
 
@@ -76,3 +57,25 @@ class Frame_Bank(Bank_accont):
                 return 'LOGIN'
         connect_data.close()
         return 'ERROR'
+def recomend_ (number_recomend):
+    connect_data = sql.connect('Lup_cap/Bank_Lu.db')
+    cursor_data = connect_data.cursor()
+    cursor_data.execute('Select ID_recomend from Bank_lup_cap')
+    select_sql = cursor_data.fetchall()
+    print(select_sql[0][0])
+    for i,recoment in enumerate(select_sql):
+        print(recoment[0])
+        if recoment[0] == number_recomend:
+                print('ok')
+                cursor_data.execute(f'select Weger from Bank_lup_cap where ID_recomend = "{number_recomend}"' )
+                select_sql = cursor_data.fetchall()
+                value = 5 + select_sql[0][0]
+                cursor_data.execute(f'Update Bank_lup_cap set WEGER = "{value}" where ID_recomend = "{number_recomend}" ')
+                connect_data.commit()
+                print(select_sql)
+                return 'ACEITO'
+    else:
+        return 'ERRO'
+           
+C = Frame_Bank('KLAUS31@GMAIL.COM','Kla123456')
+C.Into_program()
