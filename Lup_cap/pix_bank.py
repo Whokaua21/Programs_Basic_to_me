@@ -18,7 +18,6 @@ class Pix_bank():
         from money, Also can create a key pix and see your Bank statement
         """""
         while True:
-                print(self.cpf[0:3] + self.cpf[4:7] + self.cpf[8:11] + self.cpf[12:14])
                 print(f'{format_}Pix BankLup{format_}')
                 Choise_person = str(input(''' 
         [N] NOVO PIX
@@ -38,7 +37,6 @@ class Pix_bank():
                             cursor_database = connect_database.cursor()
                             cursor_database.execute(f'Select Key_pix from Bank_lup_cap where Key_pix = "{Choise_key}"')
                             select_sql = cursor_database.fetchall()
-                            print(select_sql)
                             cursor_database.execute(f'Select Key_Pix from Bank_lup_cap where ID = "{self.ID}" ')
                             not_verify = cursor_database.fetchall()
                             connect_database.close()
@@ -81,8 +79,10 @@ class Pix_bank():
                                  print(Extrat[0] +'    R$'+ Extrat[1])
                             yes_not = str(input('Deseja Voltar:\n[S]SIm\n[N]NÃO').upper())
                             if yes_not == 'N':
+                                 os.system('CLS')
                                  break
                             else:
+                                 os.system('CLS')
                                  continue
                         elif Choise_person == 'K':
                             print(Fore.BLUE + f'{format_}CRIAÇAO DE CHAVE{format_}' + Fore.BLUE)    
@@ -110,16 +110,61 @@ class Pix_bank():
                                     connect_database.commit()
                                     
                         break
+        self.Frame_log()                
     def Imprestimo_(self):
+        connect_db = sql.connect('Lup_cap/Bank_Lu.db')
+        cursor_db = connect_db.cursor()
+        cursor_db.execute(f'Select VALUE_LOAN from Loan_bank where CPF = "{self.cpf}"')
+        select_sql = cursor_db.fetchall()
         print(Fore.BLUE + f'{format_}EMPRÉSTIMO{format_}' + Style.RESET_ALL)
-        loan_bank = int(input('Valor do Inprestimo ->'))
-        loan_do = (self.weger / 100 )* 50
-        print(loan_do)
-        if loan_bank > loan_do:
-            print('Erro')
-        else:
-             ...
-             
+        print('''[P]PEDIR EMPRÉSTIMO
+[E]PAGAR EMPRÉSTIMO''')
+        choise_thing = str(input('-->').upper())
+        if choise_thing == 'P':
+            if select_sql != []:
+                print('Você não pode fazer outro Empréstimo')
+                self.Frame_log()
+                return
+            loan_bank = int(input('Valor do Inprestimo ->'))
+            loan_do = (self.weger / 100 ) * 50
+            print(loan_do)
+            if loan_bank > loan_do:
+                print('Você não pode fazer imprestimo com esse valor')
+            else:
+                connect_db = sql.connect('Lup_cap/Bank_Lu.db')
+                cursor_db = connect_db.cursor()
+                cursor_db.execute(f'Insert into Loan_bank(VALUE_LOAN,NAME,CPF,TELEFONE) values ("{loan_bank}","{self.name_verify}","{self.cpf}","{self.phone}")')
+                connect_db.commit()
+                connect_db.close()
+                self.Frame_log()
+        elif choise_thing == 'E':
+            if select_sql == []:
+                print('Você não tem nenhum Empréstimo pendente')
+                self.Frame_log()
+                self.Frame_log()
+            else: 
+                connect_db = sql.connect('Lup_cap/Bank_Lu.db')
+                cursor_db = connect_db.cursor()
+                cursor_db.execute(f'Select NAME,CPF,VALUE_LOAN from Loan_bank where CPF = "{self.cpf}" ')
+                select_sql = cursor_db.fetchall()
+                print(Fore.BLUE + f'{format_}PAGAMENTO{format_}' + Style.RESET_ALL)
+                print(f'''
+                NOME:{self.name_verify}
+                VALOR DO EMPRÉSTIMO:{select_sql[0][2]}''')
+                value_pay = int(input('Digite o Valor que deseja pagar -->'))
+                pay_loan =  select_sql[0][2] - value_pay
+                cursor_db.execute(f'Update Loan_bank set VALUE_LOAN = "{pay_loan}" where CPF = "{self.cpf}"')
+                pay_loan = self.weger - value_pay
+                cursor_db.execute(f'Update Bank_lup_cap set WEGER = "{pay_loan}" where ID = "{self.ID}"')
+                connect_db.commit()
+                cursor_db.execute(f'Select VALUE_LOAN from Loan_bank where CPF = "{self.cpf}"')
+                select_sql = cursor_db.fetchall()
+                if select_sql[0][0] == 0:
+                    cursor_db.execute('Delete from Loan_Bank where VALUE_LOAN = 0')
+                    print('Parabéns você pagou sem Empréstimo')
+                    connect_db.commit()
+                connect_db.close()
+                self.Frame_log()
 
     def Frame_log(self):
         print(f'''
@@ -129,7 +174,7 @@ class Pix_bank():
             SALDO BANCARIO:{self.weger}
             [P] PIX
             [E] EMPRESTIMO
-            [M] METAS 
+            [F] FECHAR 
             ''')    
         print(' Aviso:A Função meta ainda ta em desenvolvimento')
         select_frame = str(input('-->').upper())
@@ -137,5 +182,5 @@ class Pix_bank():
             self.Choice_person()
         elif select_frame == 'E':
             self.Imprestimo_()
-        elif select_frame == 'M':
-             ...
+        elif select_frame == 'F':
+            return

@@ -22,7 +22,6 @@ class Bank_accont():
         ID_random = cursor_data.fetchall()
         for rando_select in enumerate(ID_random):
             if rando_select[0] == Random:
-                print('Seila')
                 Random = random.randint(1,100000)
         cursor_data.execute(f'insert into Bank_lup_cap(CPF,NAME,EMAIL,PASSWORD,PROFESSION,DATE_,ID_recomend,WEGER,TELEFONE) values ("{self.cpf}","{self.name}","{self.email}","{self.password}","{self.profe}","{self.date}","{Random}","{self.weger}","{self.Phone}");')
         connect_data.commit()
@@ -39,11 +38,10 @@ class Frame_Bank(Bank_accont):
             cursor_data.execute(f'Select * from Bank_lup_cap where EMAIL = "{self.email_log}"')
             select_sql = cursor_data.fetchall()
             connect_data.close()
-            print(select_sql)
             Bank_p = Pix_bank(select_sql[0][4],select_sql[0][5],select_sql[0][2],select_sql[0][8],select_sql[0][9],select_sql[0][1],select_sql[0][0],select_sql[0][3])
             Bank_p.Frame_log()
         except:
-            print()
+            print('Erro 45:')
 
     def Sql_login(self):
         connect_data = sql.connect('Lup_cap/Bank_Lu.db')
@@ -62,7 +60,6 @@ def recomend_ (number_recomend):
     cursor_data = connect_data.cursor()
     cursor_data.execute('Select ID_recomend from Bank_lup_cap')
     select_sql = cursor_data.fetchall()
-    print(select_sql[0][0])
     for i,recoment in enumerate(select_sql):
         print(recoment[0])
         if recoment[0] == number_recomend:
@@ -72,10 +69,11 @@ def recomend_ (number_recomend):
                 value = 5 + select_sql[0][0]
                 cursor_data.execute(f'Update Bank_lup_cap set WEGER = "{value}" where ID_recomend = "{number_recomend}" ')
                 connect_data.commit()
-                print(select_sql)
+
                 return 'ACEITO'
     else:
         return 'ERRO'
-           
-C = Frame_Bank('KLAUS31@GMAIL.COM','Kla123456')
-C.Into_program()
+connect_data = sql.connect('Lup_cap/Bank_Lu.db')
+cursor_data = connect_data.cursor()
+cursor_data.execute('Delete from Loan_bank')
+connect_data.commit()
